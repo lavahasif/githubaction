@@ -19,11 +19,11 @@ jobs:
       - run: flutter build apk
       - run: flutter build appbundle
       - uses: actions/upload-artifact@v1
-      with:
-        # Name of the command/step.
-        name: release-apk
-        # Path to the release apk.
-        path: build/app/outputs/apk/release/app-release.apk
+        with:
+          # Name of the command/step.
+          name: release-apk
+          # Path to the release apk.
+          path: build/app/outputs/apk/release/app-release.apk
 
   job_2:
     name: Multiply by 9
@@ -37,10 +37,10 @@ jobs:
       - run: flutter pub get
       - run: flutter test
       - run: flutter build web
-      with:
-        # Name of the command/step.
-        name: web
-        # Path to the release apk.
-        path: build/web
+        with:
+          # Name of the command/step.
+          name: web
+          # Path to the release apk.
+          path: build/web
 
 

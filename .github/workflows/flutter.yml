@@ -7,31 +7,40 @@ jobs:
     name: Add 3 and 7
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: |
-          expr 3 + 7 > math-homework.txt
-      - name: Upload math result for job 1
-        uses: actions/upload-artifact@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
         with:
-          name: homework
-          path: math-homework.txt
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.0.5'
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk
+      - run: flutter build appbundle
+      - uses: actions/upload-artifact@v1
+      with:
+        # Name of the command/step.
+        name: release-apk
+        # Path to the release apk.
+        path: build/app/outputs/apk/release/app-release.apk
 
   job_2:
     name: Multiply by 9
     needs: job_1
     runs-on: windows-latest
     steps:
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v2
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
         with:
-          name: homework
-      - shell: bash
-        run: |
-          value=`cat math-homework.txt`
-          expr $value \* 9 > math-homework.txt
-      - name: Upload math result for job 2
-        uses: actions/upload-artifact@v2
-        with:
-          name: homework
-          path: math-homework.txt
+          flutter-version: '2.0.5'
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build web
+      with:
+        # Name of the command/step.
+        name: web
+        # Path to the release apk.
+        path: build/web
+
 

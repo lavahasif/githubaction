@@ -45,8 +45,7 @@ jobs:
           - run: flutter pub get
           - run: flutter test
           - run: flutter build web
-
-              - uses: actions/upload-artifact@v2
+          - uses: actions/upload-artifact@v2
             with:
               # Name of the command/step.
               name: release-apk
